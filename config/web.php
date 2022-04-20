@@ -50,6 +50,9 @@ $config = [
             'rules' => [
                 '' => 'site/index',                                
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+                'site/lesson/<id>' => 'site/lesson',
+                'admin/lesson-e/<id>' => 'admin/lesson-e',
+                'admin/lesson-d/<id>' => 'admin/lesson-d',
             ],
         ],
     ],

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Lessons;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -20,11 +22,19 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'login', 'contact', 'about', 'index', 'doctors', 'news'],
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect(['site/login']);
+                },
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout', 'contact', 'learning', 'index', 'doctors', 'news'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -121,8 +131,46 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionAbout()
+    public function actionLearning()
     {
-        return $this->render('about');
+        $lessons = Lessons::find()->all();
+
+        return $this->render('learning', [
+            'lessons' => $lessons
+        ]);
+    }
+
+    public function actionDoctors()
+    {
+        return $this->render('doctors');
+    }
+
+    public function actionNews()
+    {
+        return $this->render('news');
+    }
+
+    public function actionLesson($id)
+    {
+        $lesson = Lessons::findOne($id);
+
+        return $this->render('lesson', [
+            'id' => $id,
+            'lesson' => $lesson
+        ]);
+    }
+
+    public function actionAddAdmin() {
+        $model = User::find()->where(['username' => 'admin'])->one();
+        if (empty($model)) {
+            $user = new User();
+            $user->username = 'admin';
+            $user->email = 'admin@кодер.укр';
+            $user->setPassword('admin');
+            $user->generateAuthKey();
+            if ($user->save()) {
+                echo 'good';
+            }
+        }
     }
 }

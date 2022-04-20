@@ -30,23 +30,26 @@ AppAsset::register($this);
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
+        'brandImage' => Yii::$app->params['image_dir'].'/logo.png',
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-md bg-primary',
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Головна', 'url' => ['/site/index']],
+            ['label' => 'Навчання', 'url' => ['/site/learning']],
+            ['label' => 'Новини', 'url' => ['/site/news']],
+            ['label' => 'Контакти лікарів', 'url' => ['/site/doctors']],
+            ['label' => 'Зворотній зв`язок', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/site/login'], 'class' => 'navbar-logout-button']
             ) : (
-                '<li>'
+                '<li class="navbar-logout-button">'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Вийти (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -70,8 +73,7 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-        <p class="float-left">&copy; My Company <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
+        <p class="text-center">&copy; Іллінецька ЦРЛ <?= date('Y') ?></p>
     </div>
 </footer>
 
