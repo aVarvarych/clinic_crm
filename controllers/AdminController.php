@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Lessons;
+use app\models\News;
 use yii\web\UploadedFile;
 
 class AdminController extends Controller
@@ -155,6 +156,63 @@ class AdminController extends Controller
         Yii::$app->session->setFlash('deleteLessonFormSubmitted');
 
         return $this->redirect(['admin/learning']);
+
+    }
+
+    public function actionNews()
+    {
+        $news = News::find()->all();
+
+        return $this->render('news', [
+            'news' => $news
+        ]);
+    }
+
+    public function actionNewsA() {
+
+        $model = new News();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->save(false);
+
+            Yii::$app->session->setFlash('addNewsFormSubmitted');
+
+            return $this->refresh();
+        }
+
+        return $this->render('news_a', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionNewsE($id) {
+
+        $model = News::find()->where(['id' => $id])->one();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->save(false);
+
+            Yii::$app->session->setFlash('editNewsFormSubmitted');
+
+            return $this->refresh();
+        }
+
+        return $this->render('news_e', [
+            'id' => $id,
+            'model' => $model
+        ]);
+    }
+
+    public function actionNewsD($id) {
+
+        $lesson = News::findOne($id);
+        $lesson->delete();
+
+        Yii::$app->session->setFlash('deleteNewsFormSubmitted');
+
+        return $this->redirect(['admin/news']);
 
     }
 

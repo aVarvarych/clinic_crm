@@ -41,6 +41,18 @@ class AdminNavbarWidget extends Widget
                 'url' => Url::toRoute(['admin/lesson-a']),
                 'label' => 'Додати урок'
             ],
+            [
+                'page' => 'news',
+                'active' => $this->page == 'news' ? 'active' : '',
+                'url' => Url::toRoute(['admin/news']),
+                'label' => 'Новини'
+            ],
+            [
+                'page' => 'news-a',
+                'active' => $this->page == 'news-a' ? 'active' : '',
+                'url' => Url::toRoute(['admin/news-a']),
+                'label' => 'Додати новину'
+            ],
         ];
 
         foreach($pages as $page) {

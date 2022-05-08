@@ -16,36 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th scope="col">П.І.П</th>
+                    <th scope="col">Посада</th>
                     <th scope="col">Номер телефону</th>
                     <th scope="col">E-mail</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Коваленко Іван Петрович</td>
-                    <td>+380 (93) 999 - 99 - 99</td>
-                    <td>kovalenko@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Коваленко Іван Петрович</td>
-                    <td>+380 (93) 999 - 99 - 99</td>
-                    <td>kovalenko@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Коваленко Іван Петрович</td>
-                    <td>+380 (93) 999 - 99 - 99</td>
-                    <td>kovalenko@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Коваленко Іван Петрович</td>
-                    <td>+380 (93) 999 - 99 - 99</td>
-                    <td>kovalenko@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Коваленко Іван Петрович</td>
-                    <td>+380 (93) 999 - 99 - 99</td>
-                    <td>kovalenko@gmail.com</td>
-                </tr>
+                    <?php foreach ($doctors as $doctor): ?>
+                        <tr>
+                            <td><?= $doctor['name'] ?></td>
+                            <td><?= $doctor['position'] ?></td>
+                            <td><?= $doctor['phone'] ? '+380'.$doctor['phone'] : '' ?></td>
+                            <td><?= $doctor['email'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

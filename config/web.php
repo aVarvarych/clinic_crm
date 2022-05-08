@@ -53,6 +53,8 @@ $config = [
                 'site/lesson/<id>' => 'site/lesson',
                 'admin/lesson-e/<id>' => 'admin/lesson-e',
                 'admin/lesson-d/<id>' => 'admin/lesson-d',
+                'admin/news-e/<id>' => 'admin/news-e',
+                'admin/news-d/<id>' => 'admin/news-d',
             ],
         ],
     ],

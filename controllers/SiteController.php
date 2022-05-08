@@ -7,7 +7,9 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use app\models\Doctors;
 use yii\filters\VerbFilter;
+use app\models\News;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
@@ -142,12 +144,20 @@ class SiteController extends Controller
 
     public function actionDoctors()
     {
-        return $this->render('doctors');
+        $doctors = Doctors::find()->all();
+
+        return $this->render('doctors', [
+            'doctors' => $doctors
+        ]);
     }
 
     public function actionNews()
     {
-        return $this->render('news');
+        $news = News::find()->all();
+
+        return $this->render('news', [
+            'news' => $news
+        ]);
     }
 
     public function actionLesson($id)
@@ -161,14 +171,16 @@ class SiteController extends Controller
     }
 
     public function actionAddAdmin() {
-        $model = User::find()->where(['username' => 'admin'])->one();
-        if (empty($model)) {
+        $doctors = Doctors::find()->all();
+        foreach ($doctors as $doctor) {
             $user = new User();
-            $user->username = 'admin';
-            $user->email = 'admin@кодер.укр';
-            $user->setPassword('admin');
+            $user->username = $doctor->email ? $doctor->email : 'user'.$doctors->id ;
+            $user->email = $doctor->email;
+            $user->setPassword($doctor->phone ? $doctor->phone : 192837465);
             $user->generateAuthKey();
             if ($user->save()) {
+                $doctor->user_id = $user->id;
+                $doctor->save();
                 echo 'good';
             }
         }
